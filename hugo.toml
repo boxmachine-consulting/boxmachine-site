@@ -1,0 +1,14 @@
+baseURL = "https://consulting.boxmachine.org/"
+locale = "en-AU"
+title = "Box Machine"
+disableKinds = ["section", "taxonomy", "term", "rss"]
+disableHugoGeneratorInject = true
+
+[params]
+  description = "Independent, vendor-neutral Fleet Management System and mining technology advisory from Callum Finch. Perth, Western Australia."
+  # While true, the site asks search engines not to list it. Set to false at launch.
+  noindex = true
+  email = "callum@boxmachine.org"
+  phone = "0403 980 504"
+  phoneLink = "+61403980504"
+  location = "Perth, Western Australia"

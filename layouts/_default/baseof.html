@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{ if .IsHome }}{{ site.Title }} | Mining technology consulting{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
+<meta name="description" content="{{ site.Params.description }}">
+{{ if site.Params.noindex }}<meta name="robots" content="noindex, nofollow">{{ end }}
+<meta property="og:title" content="{{ site.Title }} | Mining technology consulting">
+<meta property="og:description" content="{{ site.Params.description }}">
+<meta property="og:type" content="website">
+{{ with resources.Get "images/hero-dusk.jpg" }}<meta property="og:image" content="{{ (.Resize "1200x q85").Permalink }}">{{ end }}
+<meta name="theme-color" content="#271e52">
+<link rel="icon" href="{{ "favicon.png" | relURL }}">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;800&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+{{ $css := resources.Get "css/main.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}">
+</head>
+<body>
+{{ block "main" . }}{{ end }}
+<script src="{{ "js/main.js" | relURL }}" defer></script>
+</body>
+</html>

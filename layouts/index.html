@@ -1,0 +1,40 @@
+{{ define "main" }}
+{{ $p := .Params }}
+{{ $hero := resources.Get "images/hero-dusk.jpg" }}
+{{ $h1 := $hero.Resize "1600x q88" }}{{ $h2 := $hero.Resize "2400x q88" }}{{ $h3 := $hero.Resize "3200x q88" }}
+<div class="bg"><img src="{{ $h2.RelPermalink }}" srcset="{{ $h1.RelPermalink }} 1600w, {{ $h2.RelPermalink }} 2400w, {{ $h3.RelPermalink }} 3200w" sizes="max(100vw, 178vh)" width="{{ $h2.Width }}" height="{{ $h2.Height }}" alt="" fetchpriority="high"></div>
+
+<nav class="nav" id="nav" aria-label="Main"><div class="w">
+<a class="lg" href="#top">{{ site.Title }}</a>
+<button class="mb" id="mb" aria-expanded="false" aria-controls="nl">Menu</button>
+<ul id="nl"><li><a href="#services">Services</a></li><li><a href="#cases">Case studies</a></li><li><a href="#about">About</a></li><li><a class="cta" href="#contact">Get in touch</a></li></ul>
+</div></nav>
+
+<header class="hero" id="top"><div class="hc" id="hc">
+<h1>{{ .Title }}</h1><p>{{ $p.tagline }}</p>
+<div class="pills"><a class="pill" href="#services">Services</a><a class="pill" href="#cases">Case studies</a><a class="pill" href="#about">About</a><a class="pill cta" href="#contact">Get in touch</a></div>
+</div><a class="chev" href="#stats" aria-label="Scroll down"></a></header>
+
+<main>
+<div class="stats" id="stats"><div class="w">{{ range $p.stats }}<div><b class="n">{{ .n }}</b><span class="l">{{ .label }}</span></div>{{ end }}</div></div>
+
+{{ $pit := resources.Get "images/band-pit.jpg" }}{{ $b1 := $pit.Resize "1200x q80" }}{{ $b2 := $pit.Resize "2000x q80" }}
+<div class="band"><img src="{{ $b2.RelPermalink }}" srcset="{{ $b1.RelPermalink }} 1200w, {{ $b2.RelPermalink }} 2000w" sizes="100vw" alt="" loading="lazy"><div class="w"><h2>{{ $p.hook.text }}</h2><a href="#cases">{{ $p.hook.link }}</a></div></div>
+
+<section class="s" id="services"><div class="w"><h2 class="t">{{ $p.services.title }}</h2><p class="sub">{{ $p.services.sub }}</p>
+<div class="g3">{{ range $p.services.items }}<div class="card"><h3>{{ .title }}</h3><p>{{ .text }}</p></div>{{ end }}</div></div></section>
+
+<section class="s alt" id="cases"><div class="w"><h2 class="t">{{ $p.cases.title }}</h2><p class="sub">{{ $p.cases.sub }}</p>
+<div class="g3">{{ range $p.cases.items }}{{ $it := . }}
+<div class="card case"><div class="ph">{{ with $it.image }}{{ with resources.Get . }}{{ $a := .Resize "640x q82" }}{{ $b := .Resize "960x q82" }}{{ $set := printf "%s 640w, %s 960w" $a.RelPermalink $b.RelPermalink }}{{ if ge .Width 1600 }}{{ $c := .Resize "1600x q82" }}{{ $set = printf "%s, %s 1600w" $set $c.RelPermalink }}{{ end }}<img src="{{ $b.RelPermalink }}" srcset="{{ $set }}" sizes="(max-width:820px) 92vw, 340px" style="object-position:{{ $it.pos | default "50% 50%" }}" alt="{{ $it.alt }}" loading="lazy">{{ end }}{{ end }}</div>
+<div class="bd"><b class="n">{{ .n }}</b><h3>{{ .head }}</h3><p>{{ .text }}</p></div></div>{{ end }}</div></div></section>
+
+<section class="s" id="about"><div class="w ab"><div><h2 class="t">{{ $p.about.title }}</h2>{{ range $p.about.paragraphs }}<p>{{ . | markdownify }}</p>{{ end }}</div>
+<ul class="pr">{{ range $p.about.principles }}<li><b>{{ .t }}</b>{{ .d }}</li>{{ end }}</ul></div></section>
+
+<section class="ct" id="contact"><div class="w"><h2>{{ $p.contact.title }}</h2>
+<dl><dd><a href="mailto:{{ site.Params.email }}">{{ site.Params.email }}</a></dd><dd><a href="tel:{{ site.Params.phoneLink }}">{{ site.Params.phone }}</a></dd><dd>{{ site.Params.location }}</dd></dl>
+<a class="pill cta" href="mailto:{{ site.Params.email }}">Email Callum</a></div></section>
+</main>
+<footer><div class="w">© {{ now.Year }} {{ site.Title }}</div></footer>
+{{ end }}
