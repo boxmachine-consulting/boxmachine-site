@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Locale }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{ if .IsHome }}{{ site.Title }} | Mining technology consulting{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
+<meta name="description" content="{{ site.Params.description }}">
+{{ if eq .Kind "404" }}<meta name="robots" content="noindex">{{ end }}
+<meta property="og:title" content="{{ site.Title }} | Mining technology consulting">
+<meta property="og:description" content="{{ site.Params.description }}">
+<meta property="og:type" content="website">
+{{ if .IsHome }}<link rel="canonical" href="{{ .Permalink }}">{{ end }}
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:locale" content="en_AU">
+<meta property="og:url" content="{{ .Permalink }}">
+{{ with resources.Get "images/og-card.jpg" }}{{ $og := . | fingerprint "md5" }}<meta property="og:image" content="{{ $og.Permalink }}">
+<meta property="og:image:width" content="{{ $og.Width }}"><meta property="og:image:height" content="{{ $og.Height }}">
+<meta property="og:image:alt" content="Box Machine logo over haul trucks at dusk">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ site.Title }} | Mining technology consulting">
+<meta name="twitter:description" content="{{ site.Params.description }}">
+<meta name="twitter:image" content="{{ $og.Permalink }}">{{ end }}
+<link rel="preload" href="{{ "fonts/figtree-latin-wght-normal.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "fonts/newsreader-latin-opsz-normal.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+{{ block "head" . }}{{ end }}
+<meta name="theme-color" content="#271e52">
+<link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+<link rel="icon" href="{{ "favicon-32.png" | relURL }}" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
+{{ $css := resources.Get "css/main.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}">
+</head>
+<body>
+{{ block "main" . }}{{ end }}
+{{ with resources.Get "js/main.js" | resources.Minify | resources.Fingerprint }}<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>{{ end }}
+</body>
+</html>
